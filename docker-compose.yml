@@ -3,7 +3,7 @@ version: '3'
 services:
   ping-service:
     build:
-      context: ./EX3
+      context: ./EX4
       dockerfile: Dockerfile.serveur1
     ports:
       - "7100:4567"
@@ -16,7 +16,7 @@ services:
 
   pong-service:
     build:
-      context: ./EX3
+      context: ./EX4
       dockerfile: Dockerfile.serveur2
     ports:
       - "7106:5372"
@@ -29,7 +29,7 @@ services:
 
   coordinate-service:
     build:
-      context: ./EX3
+      context: ./EX4
       dockerfile: Dockerfile.serveur3
     ports:
       - "7108:8080"
@@ -38,6 +38,18 @@ services:
     container_name: serveur3
     command: ["python", "-u", "serveur3.py"]
     
+
+  server4-service:
+    build:
+      context: ./EX4
+      dockerfile: Dockerfile.serveur4
+    ports:
+      - "7110:1111"
+    networks:
+      - alpine-net
+    container_name: serveur4
+    command: ["python", "-u", "serveur4.py"]
+
 networks:
   alpine-net:
     driver: bridge
