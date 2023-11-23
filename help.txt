@@ -1,0 +1,2 @@
+#Exercice 2 : Mise à l'échelle
+docker-compose up --scale ping-service-instance-2=2 --scale ping-service-instance-3=2 --scale pong-service-instance-2=2 --scale pong-service-instance-3=2

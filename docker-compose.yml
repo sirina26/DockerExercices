@@ -12,8 +12,6 @@ services:
     container_name: server1
     command: ["python", "-u", "serveur1.py"]
 
-
-
   pong-service:
     build:
       context: ./EX4
@@ -37,7 +35,6 @@ services:
       - alpine-net
     container_name: serveur3
     command: ["python", "-u", "serveur3.py"]
-    
 
   server4-service:
     build:
@@ -49,6 +46,54 @@ services:
       - alpine-net
     container_name: serveur4
     command: ["python", "-u", "serveur4.py"]
+
+  ping-service-instance-2:
+    build:
+      context: ./EX4
+      dockerfile: Dockerfile.serveur1
+    ports:
+      - "7101:4567" 
+    networks:
+      - alpine-net
+    container_name: server1_instance_2
+    command: ["python", "-u", "serveur1.py"]
+
+  ping-service-instance-3:
+    build:
+      context: ./EX4
+      dockerfile: Dockerfile.serveur1
+    ports:
+      - "7102:4567"  
+    networks:
+      - alpine-net
+    container_name: server1_instance_3
+    command: ["python", "-u", "serveur1.py"]
+
+  pong-service-instance-2:
+    build:
+      context: ./EX4
+      dockerfile: Dockerfile.serveur2
+    ports:
+      - "7107:5372"  
+    networks:
+      - alpine-net
+    container_name: serveur2_instance_2
+    command: ["python", "-u", "serveur2.py"]
+    depends_on:
+      - ping-service-instance-2
+
+  pong-service-instance-3:
+    build:
+      context: ./EX4
+      dockerfile: Dockerfile.serveur2
+    ports:
+      - "7108:5372"  
+    networks:
+      - alpine-net
+    container_name: serveur2_instance_3
+    command: ["python", "-u", "serveur2.py"]
+    depends_on:
+      - ping-service-instance-3
 
 networks:
   alpine-net:
