@@ -1,2 +1,7 @@
 #Exercice 2 : Mise à l'échelle
 docker-compose up --scale ping-service-instance-2=2 --scale ping-service-instance-3=2 --scale pong-service-instance-2=2 --scale pong-service-instance-3=2
+
+#Exercice 3 : Gateway
+
+1. Modifier le fichier docker-compose pour lancer 3 instances du serveur "ping" mais seulement une instance de "pong".
+docker-compose up --scale ping-service-instance-2=2 --scale ping-service-instance-3=2
