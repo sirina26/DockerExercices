@@ -8,7 +8,7 @@ services:
     ports:
       - "7100:4567"
     networks:
-      - alpine-net
+      - ping-net
     container_name: server1
     command: ["python", "-u", "serveur1.py"]
 
@@ -19,7 +19,8 @@ services:
     ports:
       - "7106:5372"
     networks:
-      - alpine-net
+      - ping-net
+      - gateway-net
     container_name: serveur2
     command: ["python", "-u", "serveur2.py"]
     depends_on:
@@ -32,7 +33,7 @@ services:
     ports:
       - "7108:8080"
     networks:
-      - alpine-net
+      - gateway-net
     container_name: serveur3
     command: ["python", "-u", "serveur3.py"]
 
@@ -43,7 +44,7 @@ services:
     ports:
       - "7110:1111"
     networks:
-      - alpine-net
+      - gateway-net
     container_name: serveur4
     command: ["python", "-u", "serveur4.py"]
 
@@ -54,7 +55,8 @@ services:
     ports:
       - "7101:4567"  
     networks:
-      - alpine-net
+      - ping-net
+      - gateway-net
     container_name: server1_instance_2
     command: ["python", "-u", "serveur1.py"]
 
@@ -65,7 +67,8 @@ services:
     ports:
       - "7102:4567"  
     networks:
-      - alpine-net
+      - ping-net
+      - gateway-net
     container_name: server1_instance_3
     command: ["python", "-u", "serveur1.py"]
 
@@ -76,11 +79,14 @@ services:
     ports:
       - "7109:5000"  
     networks:
-      - alpine-net
+      - ping-net
+      - gateway-net
     container_name: gateway
     command: ["python", "-u", "serveur_gateway.py"]
 
-
 networks:
-  alpine-net:
+  ping-net:
+    driver: bridge
+
+  gateway-net:
     driver: bridge
