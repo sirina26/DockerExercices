@@ -2,11 +2,12 @@ from flask import Flask, request
 import requests
 import time
 from threading import Thread
+import socket
 
 app = Flask(__name__)
 server_3_url = "http://coordinate-service:8080"
 message_broker_url = "http://serveur4:1111"
-
+app.config['NETWORK_NAME'] = 'ping-net-1'
 
 def send_ping():
     while True:

@@ -1,92 +1,70 @@
 version: '3'
 
 services:
-  ping-service:
+  ping-service-1:
     build:
       context: ./EX4
       dockerfile: Dockerfile.serveur1
     ports:
       - "7100:4567"
     networks:
-      - ping-net
+      - alpine-net
+      - ping-net-1
     container_name: server1
     command: ["python", "-u", "serveur1.py"]
 
-  pong-service:
+  pong-service-1:
     build:
       context: ./EX4
       dockerfile: Dockerfile.serveur2
     ports:
       - "7106:5372"
     networks:
-      - ping-net
-      - gateway-net
+      - alpine-net
+      - pong-net-1
     container_name: serveur2
     command: ["python", "-u", "serveur2.py"]
     depends_on:
-      - ping-service
+      - ping-service-1
 
-  coordinate-service:
-    build:
-      context: ./EX4
-      dockerfile: Dockerfile.serveur3
-    ports:
-      - "7108:8080"
-    networks:
-      - gateway-net
-    container_name: serveur3
-    command: ["python", "-u", "serveur3.py"]
-
-  server4-service:
-    build:
-      context: ./EX4
-      dockerfile: Dockerfile.serveur4
-    ports:
-      - "7110:1111"
-    networks:
-      - gateway-net
-    container_name: serveur4
-    command: ["python", "-u", "serveur4.py"]
-
-  ping-service-instance-2:
+  ping-service-2:
     build:
       context: ./EX4
       dockerfile: Dockerfile.serveur1
     ports:
-      - "7101:4567"  
+      - "7101:4567"
     networks:
-      - ping-net
-      - gateway-net
+      - alpine-net
+      - ping-net-2
     container_name: server1_instance_2
     command: ["python", "-u", "serveur1.py"]
 
-  ping-service-instance-3:
+  pong-service-2:
     build:
       context: ./EX4
-      dockerfile: Dockerfile.serveur1
+      dockerfile: Dockerfile.serveur2
     ports:
-      - "7102:4567"  
+      - "7107:5372"
     networks:
-      - ping-net
-      - gateway-net
-    container_name: server1_instance_3
-    command: ["python", "-u", "serveur1.py"]
-
-  gateway-service:
-    build:
-      context: ./EX4
-      dockerfile: Dockerfile.serveur_gateway
-    ports:
-      - "7109:5000"  
-    networks:
-      - ping-net
-      - gateway-net
-    container_name: gateway
-    command: ["python", "-u", "serveur_gateway.py"]
+      - alpine-net
+      - pong-net-2
+    container_name: serveur2_instance_2
+    command: ["python", "-u", "serveur2.py"]
+    depends_on:
+      - ping-service-2
 
 networks:
-  ping-net:
+  alpine-net:
     driver: bridge
 
-  gateway-net:
+  ping-net-1:
+    driver: bridge
+
+  pong-net-1:
+    driver: bridge
+
+  ping-net-2:
+    driver: bridge
+
+  pong-net-2:
     driver: bridge
